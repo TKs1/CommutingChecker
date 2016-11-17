@@ -231,8 +231,9 @@ public class MainActivity extends AppCompatActivity
 
     /* Fragments objects */
     private MainFragment fragMain;
-    private ChartFragment fragChart;
     public SetupFragment fragSetup;
+    private ChartFragment fragChart;
+    private Other_attendFragment fragOtherattend;
 
     /* Navigation View object */
     private NavigationView navigationView;
@@ -244,8 +245,9 @@ public class MainActivity extends AppCompatActivity
 
         // Fragments
         fragMain = MainFragment.newInstance();
-        fragChart = ChartFragment.newInstance();
         fragSetup = SetupFragment.newInstance();
+        fragChart = ChartFragment.newInstance();
+        fragOtherattend = Other_attendFragment.newInstance();
 
         // DrawerLayout
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -262,9 +264,12 @@ public class MainActivity extends AppCompatActivity
         View navHeaderView = navigationView.inflateHeaderView(R.layout.nav_header);
         tvNavHeadId = (TextView) navHeaderView.findViewById(R.id.nav_head_id);
         tvNavHeadAddr = (TextView) navHeaderView.findViewById(R.id.nav_head_bluetooth_addr);
+        tvNavHeadId.setText("employee id here");
+        tvNavHeadAddr.setText("employee bluetooth address here");
 
         // Set the menu of the Navigation View
         navigationView.inflateMenu(R.menu.nav_menu);
+        int check = navigationView.getMenu().size();
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, fragMain)
@@ -297,11 +302,17 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        FragmentManager fragmentManager = getFragmentManager();
 
-        //noinspection SimplifiableIfStatement
+        ///noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
             moveTaskToBack(true);
             finish();
+        }else if(id == R.id.admin_setup){
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragSetup)
+                    .detach(fragSetup).attach(fragSetup)
+                    .commit();
         }
 
         return super.onOptionsItemSelected(item);
@@ -326,13 +337,19 @@ public class MainActivity extends AppCompatActivity
                         .detach(fragSetup).attach(fragSetup)
                         .commit();
                 break;
-            case R.id.nav_chart_movement:
+            case R.id.nav_population_of_each_department:
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragChart)
                         .detach(fragChart).attach(fragChart)
                         .commit();
                 break;
-            case R.id.nav_chart_work:
+            case R.id.nav_Otherattend:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, fragOtherattend)
+                        .detach(fragOtherattend).attach(fragOtherattend)
+                        .commit();
+                break;
+            case R.id.attendence_each_people:
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragChart)
                         .detach(fragChart).attach(fragChart)
